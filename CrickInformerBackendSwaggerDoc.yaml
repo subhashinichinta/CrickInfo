@@ -1,0 +1,76 @@
+openapi: '3.0.0'
+info:
+  version: '1.0.0'
+  title: 'Sample API'
+  description: Cricket Live Match details
+  
+servers:
+  - url: http://localhost:8082/match
+    description: Local Server URI
+
+paths:
+  /live:
+    get:
+      summary: Provide Live matches details from crickbuzz url
+      responses:
+        '200':
+          description: Provide List of live matches details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LiveMatch'
+        500:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    LiveMatch:
+      type: object
+      properties:
+        matchId:
+          type: string
+          description: Specifies unique Id for each match
+        teamHeading:
+          type: string
+          description: Specifies the team heading on top of match info
+        battingTeam:
+          type: string
+          description: Specifies batting team name
+        battingTeamScore:
+          type: string
+          description: Specifies batting team score 
+        bowlTeam:
+          type: string
+          description: Specifies bowl team name
+        bowlTeamScore:
+          type: string
+          description: Specifies bowl team score
+        liveText:
+          type: string
+          description: Specifies live text regarding ongoing match
+        matchLink:
+          type: string
+          description: Specifies match url link
+        textComplete:
+          type: string
+          description: Specifies match complete details
+        status:
+          type: string
+          description: Specifies match is either LIVE or COMPLETE
+        matchNumberVenue:
+          type: string
+          description: Specifies match venue details
+    Error:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          description: A human readable error message
+          type: string
+ 
